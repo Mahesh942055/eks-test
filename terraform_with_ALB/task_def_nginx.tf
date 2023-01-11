@@ -1,14 +1,14 @@
-# data "aws_subnets" "subnet" {
-#   filter {
-#     name = "vpc-id"
-#     values = [aws_default_vpc.default.id]
-#   }
-# }
-# resource "aws_default_vpc" "default" {
-#   tags = {
-#     Name = "Default VPC"
-#   }
-# }
+data "aws_subnets" "subnet" {
+  filter {
+    name = "vpc-id"
+    values = [aws_default_vpc.default.id]
+  }
+}
+resource "aws_default_vpc" "default" {
+  tags = {
+    Name = "Default VPC"
+  }
+}
 # resource "aws_ecs_task_definition" "test" {
 #   family                   = "my_laravel_test-nginx"
 #   requires_compatibilities = ["FARGATE"]
