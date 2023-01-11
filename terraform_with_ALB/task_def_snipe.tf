@@ -169,18 +169,13 @@ resource "aws_ecs_service" "test-service-laravel-main" {
   name            = "testapp-service-laravel-main"
   cluster         = aws_ecs_cluster.foo.id
   task_definition = aws_ecs_task_definition.laravel-main.arn
-  desired_count   = 2
+  desired_count   = 1
   launch_type     = "FARGATE"
 
   network_configuration {
     security_groups  = [aws_security_group.ecs_sg-80.id]
     subnets          = data.aws_subnets.subnet.ids
     assign_public_ip = true
-  }
-    load_balancer {
-    target_group_arn = module.mahesh-alb.elb-target-group-arn
-    container_name   = "laravel-nginx-con"
-    container_port   = 80
   }
 
   depends_on = [aws_iam_role_policy_attachment.ecs_task_execution_role, aws_ecs_service.test-service-nginx]

@@ -178,6 +178,11 @@ resource "aws_ecs_service" "test-service-nginx" {
   service_registries{
     registry_arn = aws_service_discovery_service.example.arn
   }
+    load_balancer {
+    target_group_arn = module.mahesh-alb.elb-target-group-arn
+    container_name   = "laravel-nginx-con"
+    container_port   = 80
+  }
   depends_on = [aws_iam_role_policy_attachment.ecs_task_execution_role, aws_service_discovery_service.example]
 }
 
