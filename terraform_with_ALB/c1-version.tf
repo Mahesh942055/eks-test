@@ -14,7 +14,7 @@ terraform {
 
 terraform {
   backend "s3" {
-    bucket = "laraveltest"
+    bucket = "laraveltest1"
     key    = "path/tf.state"
     region =  "ap-south-1"
     encrypt = true
