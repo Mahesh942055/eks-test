@@ -226,6 +226,6 @@ resource "aws_cloudwatch_log_group" "nginx" {
 
   tags = {
     Environment = "production"
-    Application = "nginx""
+    Application = "nginx"
   }
 }
