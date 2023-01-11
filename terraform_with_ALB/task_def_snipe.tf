@@ -1,3 +1,21 @@
+resource "aws_cloudwatch_log_group" "laravel" {
+  name = "/ecs/laravel"
+
+  tags = {
+    Environment = "production"
+    Application = "laravel"
+  }
+}
+
+resource "aws_cloudwatch_log_group" "nginx" {
+  name = "/ecs/nginx"
+
+  tags = {
+    Environment = "production"
+    Application = "nginx"
+  }
+}
+
 resource "aws_ecs_task_definition" "laravel-main" {
   family                   = "my_laravel_test-main"
   requires_compatibilities = ["FARGATE"]
