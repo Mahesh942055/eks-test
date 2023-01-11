@@ -51,6 +51,15 @@ resource "aws_ecs_task_definition" "laravel-main" {
     
   ])
 
+  runtime_platform {
+    operating_system_family = "LINUX"
+    
+  }
+   volume {
+    name      = "laravel-vol"
+    # host_path = "/ecs/service-storage"
+  }
+
 }
 
 #   runtime_platform {
