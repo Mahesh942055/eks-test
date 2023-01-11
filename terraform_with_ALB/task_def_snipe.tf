@@ -19,7 +19,7 @@ resource "aws_ecs_task_definition" "laravel-main" {
           hostPort      = 9000
         }
       ]
-      secrets = local.secret
+      #secrets = local.secret
       logConfiguration = {
         logDriver = "awslogs",
         options = {
