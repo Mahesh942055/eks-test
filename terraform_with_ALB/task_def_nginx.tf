@@ -214,20 +214,20 @@ resource "aws_default_vpc" "default" {
 # }
 
 
-# resource "aws_cloudwatch_log_group" "laravel" {
-#   name = "/ecs/laravel-nginx"
+resource "aws_cloudwatch_log_group" "laravel" {
+  name = "/ecs/laravel"
 
-#   tags = {
-#     Environment = "production"
-#     Application = "laravel"
-#   }
-# }
+  tags = {
+    Environment = "production"
+    Application = "laravel"
+  }
+}
 
-# resource "aws_cloudwatch_log_group" "nginx" {
-#   name = "/ecs/laravel"
+resource "aws_cloudwatch_log_group" "nginx" {
+  name = "/ecs/nginx"
 
-#   tags = {
-#     Environment = "production"
-#     Application = "nginx"
-#   }
-# }
+  tags = {
+    Environment = "production"
+    Application = "nginx"
+  }
+}
