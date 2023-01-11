@@ -149,7 +149,28 @@ resource "aws_ecs_task_definition" "laravel-main" {
       "systemControls": null,
       "privileged": null,
       "name": "testapp"
-    }
+    },
+
+
+     {
+      name      = "nginx"
+      image     = "114155856902.dkr.ecr.ap-south-1.amazonaws.com/nginx:latest"
+      essential = true
+      portMappings = [
+        {
+          containerPort = 80
+          hostPort      = 80
+        }
+      ]
+      logConfiguration = {
+        logDriver = "awslogs",
+        options = {
+          awslogs-group         = "/ecs/laravel-nginx",
+          awslogs-region        = "ap-south-1",
+          awslogs-stream-prefix = "nginx"
+        }
+      }
+     }
   ]
 TASK_DEFINITION
 
@@ -177,8 +198,13 @@ resource "aws_ecs_service" "test-service-laravel-main" {
     subnets          = data.aws_subnets.subnet.ids
     assign_public_ip = true
   }
+    load_balancer {
+    target_group_arn = module.mahesh-alb.elb-target-group-arn
+    container_name   = "nginx"
+    container_port   = 80
+  }
 
-  depends_on = [aws_iam_role_policy_attachment.ecs_task_execution_role, aws_ecs_service.test-service-nginx]
+  #depends_on = [aws_iam_role_policy_attachment.ecs_task_execution_role, aws_ecs_service.test-service-nginx]
 }
 
 data "aws_ecr_repository" "example" {
