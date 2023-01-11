@@ -32,18 +32,18 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build, tag, and push image to Amazon ECRs
-        id: build-image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: nginx
-          #IMAGE_TAG: ${{ github.event.head_commit.id }}
-          IMAGE_TAG: latest
-        run: |
-          echo $IMAGE_TAG
-          docker build -f .docker/nginx/dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+      # - name: Build, tag, and push image to Amazon ECRs
+      #   id: build-image
+      #   env:
+      #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      #     ECR_REPOSITORY: nginx
+      #     #IMAGE_TAG: ${{ github.event.head_commit.id }}
+      #     IMAGE_TAG: latest
+      #   run: |
+      #     echo $IMAGE_TAG
+      #     docker build -f .docker/nginx/dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+      #     docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+      #     echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1

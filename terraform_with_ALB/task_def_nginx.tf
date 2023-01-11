@@ -210,3 +210,22 @@ resource "aws_service_discovery_service" "example" {
     failure_threshold = 1
   }
 }
+
+
+resource "aws_cloudwatch_log_group" "laravel" {
+  name = "/ecs/laravel-nginx"
+
+  tags = {
+    Environment = "production"
+    Application = "laravel"
+  }
+}
+
+resource "aws_cloudwatch_log_group" "nginx" {
+  name = "/ecs/laravel"
+
+  tags = {
+    Environment = "production"
+    Application = "nginx""
+  }
+}
