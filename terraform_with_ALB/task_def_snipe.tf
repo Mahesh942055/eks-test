@@ -183,7 +183,7 @@ resource "aws_ecs_service" "test-service-laravel-main" {
     container_port   = 80
   }
 
-  depends_on = [aws_iam_role_policy_attachment.ecs_task_execution_role, aws_ecs_service.test-service-mysql]
+  depends_on = [aws_iam_role_policy_attachment.ecs_task_execution_role, aws_ecs_service.test-service-nginx]
 }
 
 data "aws_ecr_repository" "example" {

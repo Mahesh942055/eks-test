@@ -36,7 +36,7 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: laravel
+          ECR_REPOSITORY: nginx
           #IMAGE_TAG: ${{ github.event.head_commit.id }}
           IMAGE_TAG: latest
         run: |
