@@ -10,7 +10,7 @@ resource "aws_default_vpc" "default" {
   }
 }
 resource "aws_ecs_task_definition" "test" {
-  family                   = "my_laravel_test-mysql"
+  family                   = "my_laravel_test-nginx"
   requires_compatibilities = ["FARGATE"]
   task_role_arn            = aws_iam_role.ecs_task_execution_role.arn
   network_mode             = "awsvpc"
@@ -26,13 +26,19 @@ resource "aws_ecs_task_definition" "test" {
           "logDriver": "awslogs",
           "secretOptions": null,
           "options": {
-            "awslogs-group": "/ecs/laravel-mysql",
+            "awslogs-group": "/ecs/laravel-nginx",
             "awslogs-region": "ap-south-1",
             "awslogs-stream-prefix": "ecs"
           }
         },
         "entryPoint": null,
-        "portMappings": [],
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "protocol": "tcp",
+          "containerPort": 80
+        }
+      ],
         "command": null,
         "linuxParameters": null,
         "cpu": 0,
@@ -90,19 +96,19 @@ resource "aws_ecs_task_definition" "test" {
             "value": "587"
           },
           {
-            "name": "MYSQL_DATABASE",
+            "name": "nginx_DATABASE",
             "value": "laravel"
           },
           {
-            "name": "MYSQL_PASSWORD",
+            "name": "nginx_PASSWORD",
             "value": "YOUR_laravel_USER_PASSWORD"
           },
           {
-            "name": "MYSQL_ROOT_PASSWORD",
+            "name": "nginx_ROOT_PASSWORD",
             "value": "YOUR_SUPER_SECRET_PASSWORD"
           },
           {
-            "name": "MYSQL_USER",
+            "name": "nginx_USER",
             "value": "laravel"
           },
           {
@@ -116,7 +122,7 @@ resource "aws_ecs_task_definition" "test" {
         "mountPoints": [
           {
             "readOnly": null,
-            "containerPath": "/var/lib/mysql",
+            "containerPath": "/var/lib/nginx",
             "sourceVolume": "laravelsql-vol"
           }
         ],
@@ -127,7 +133,7 @@ resource "aws_ecs_task_definition" "test" {
         "memoryReservation": null,
         "volumesFrom": [],
         "stopTimeout": null,
-        "image": "mysql:5.6",
+        "image": "114155856902.dkr.ecr.ap-south-1.amazonaws.com/nginx:latest",
         "startTimeout": null,
         "firelensConfiguration": null,
         "dependsOn": null,
@@ -144,7 +150,7 @@ resource "aws_ecs_task_definition" "test" {
         "dockerLabels": null,
         "systemControls": null,
         "privileged": null,
-        "name": "laravel-mysql-con"
+        "name": "laravel-nginx-con"
       }
     ]
 TASK_DEFINITION
@@ -157,8 +163,8 @@ TASK_DEFINITION
     name      = "laravelsql-vol"
   }
 }
-resource "aws_ecs_service" "test-service-mysql" {
-  name            = "testapp-service-laravel-mysql"
+resource "aws_ecs_service" "test-service-nginx" {
+  name            = "testapp-service-laravel-nginx"
   cluster         = aws_ecs_cluster.foo.id
   task_definition = aws_ecs_task_definition.test.arn
   desired_count   = 1

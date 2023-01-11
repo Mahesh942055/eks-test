@@ -37,10 +37,11 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: laravel
-          IMAGE_TAG: ${{ github.event.head_commit.id }}
+          #IMAGE_TAG: ${{ github.event.head_commit.id }}
+          IMAGE_TAG: latest
         run: |
           echo $IMAGE_TAG
-          docker build -f .docker/php/dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker build -f .docker/nginx/dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 

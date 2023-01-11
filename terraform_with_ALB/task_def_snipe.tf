@@ -24,9 +24,9 @@ resource "aws_ecs_task_definition" "laravel-main" {
       "entryPoint": null,
       "portMappings": [
         {
-          "hostPort": 80,
+          "hostPort": 9000,
           "protocol": "tcp",
-          "containerPort": 80
+          "containerPort": 9000
         }
       ],
       "command": null,
@@ -34,8 +34,8 @@ resource "aws_ecs_task_definition" "laravel-main" {
       "cpu": 0,
       "environment": [
         {
-          "name": "APP_DEBUG",
-          "value": "false"
+          "name": "APP_NAME",
+          "value": "Laravel"
         },
         {
           "name": "APP_ENV",
@@ -179,7 +179,7 @@ resource "aws_ecs_service" "test-service-laravel-main" {
   }
     load_balancer {
     target_group_arn = module.mahesh-alb.elb-target-group-arn
-    container_name   = "testapp"
+    container_name   = "laravel-nginx-con"
     container_port   = 80
   }
 
