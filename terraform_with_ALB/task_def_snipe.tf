@@ -96,7 +96,7 @@ resource "aws_ecs_service" "test-service-laravel-main" {
   name            = "testapp-service-laravel-main"
   cluster         = aws_ecs_cluster.foo.id
   task_definition = aws_ecs_task_definition.laravel-main.arn
-  desired_count   = 1
+  desired_count   = 2
   launch_type     = "FARGATE"
 
   network_configuration {
