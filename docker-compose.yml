@@ -1,30 +1,35 @@
-version: "3.7"
-services:
-  backend:
-    build:
-      context: .docker/php
-      dockerfile: dockerfile
-    container_name: backend
-    working_dir: /var/www
-    restart: always
-    volumes:
-      - ./:/var/www
-      - .docker/php/php.ini:/usr/local/etc/php/conf.d/local.ini
+version: "3.8"
 
+services: 
+    db:
+        image: mysql:8.0
+        volumes: 
+            - db-data:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=question_board
 
-  webserver:
-    image: nginx:1.21.6-alpine
-    container_name: webserver
-    restart: unless-stopped
-    working_dir: /var/www
-    ports:
-      - "80:80"
-    volumes:
-      - ./:/var/www
-      - .docker/nginx:/etc/nginx/conf.d
-
+    app:
+        build: .
+        # entrypoint: /usr/local/bin/docker-php-entrypoint-dev
+        # command: ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
+        volumes:
+            - ./:/var/www/app
+        environment: 
+            - APP_ENV=local
+            - APP_KEY=base64:tLmYfUrrZITzLIkSjFnV+PCAFxkdU+duUxjVSIlrrHo=
+            - APP_DEBUG=true
+            - DB_CONNECTION=mysql
+            - DB_HOST=db ## same as the database service name
+            - DB_PORT=3306
+            - DB_DATABASE=question_board
+            - DB_USERNAME=root
+            - DB_PASSWORD=root
+        restart: unless-stopped
+        ports: 
+            - 8000:80
+        depends_on:
+            - db
 
 volumes:
-    dbdata:
-    test_dbdata:
-    miniodata:
+    db-data:
