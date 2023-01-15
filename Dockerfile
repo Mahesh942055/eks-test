@@ -15,7 +15,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 WORKDIR /var/www/app
 COPY . /var/www/app
 #RUN cd /var/www/app && composer install --no-scripts --no-autoloader --ansi --no-interaction
-RUN cd /var/www/app && composer update --no-scripts
+RUN cd /var/www/app && composer update 
+RUN cd /var/www/app && composer dump-autoload
 #RUN  composer install --ignore-platform-reqs
 
 # add custom php-fpm pool settings, these get written at entrypoint startup
