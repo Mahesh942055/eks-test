@@ -16,7 +16,9 @@ WORKDIR /var/www/app
 COPY . /var/www/app
 #RUN cd /var/www/app && composer install --no-scripts --no-autoloader --ansi --no-interaction
 RUN cd /var/www/app && composer update 
-RUN cd /var/www/app && composer dump-autoload
+RUN cd /var/www/app && composer dump-autoload -o \
+    && chown -R :www-data /var/www/app \
+    && chmod -R 775 /var/www/app/storage /var/www/app/bootstrap/cache
 #RUN  composer install --ignore-platform-reqs
 
 # add custom php-fpm pool settings, these get written at entrypoint startup
