@@ -41,11 +41,13 @@ COPY ./docker/default.conf /etc/nginx/conf.d/default.conf
 RUN cd /var/www/app  && chown -R :www-data /var/www/app \
     && chmod -R 775 /var/www/app/storage /var/www/app/bootstrap/cache
 
-EXPOSE 80
+
 
 # run supervisor
 
+RUN chmod +x /usr/local/bin/docker-php-entrypoint
 RUN chmod +x /usr/local/bin/docker-php-entrypoint-dev
 RUN chmod 777 .
+EXPOSE 80
 ENTRYPOINT [ "/usr/local/bin/docker-php-entrypoint-dev" ]
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
