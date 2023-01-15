@@ -38,8 +38,7 @@ COPY ./docker/nginx.conf /etc/nginx/nginx.conf
 COPY ./docker/default.conf /etc/nginx/conf.d/default.conf
 
 
-RUN cd /var/www/app && composer dump-autoload -o \
-    && chown -R :www-data /var/www/app \
+RUN cd /var/www/app  && chown -R :www-data /var/www/app \
     && chmod -R 775 /var/www/app/storage /var/www/app/bootstrap/cache
 
 EXPOSE 80
