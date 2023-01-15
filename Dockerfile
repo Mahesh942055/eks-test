@@ -15,7 +15,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 WORKDIR /var/www/app
 COPY . .
 #RUN cd /var/www/app && composer install --no-scripts --no-autoloader --ansi --no-interaction
-RUN cd /var/www/app && composer install 
+RUN cd /var/www/app && composer update --no-scripts
 # RUN cd /var/www/app && composer dump-autoload -o \
 #     && chown -R :www-data /var/www/app \
 #     && chmod -R 775 /var/www/app/storage /var/www/app/bootstrap/cache
