@@ -49,5 +49,5 @@ RUN chmod +x /usr/local/bin/docker-php-entrypoint
 RUN chmod +x /usr/local/bin/docker-php-entrypoint-dev
 RUN chmod 777 .
 EXPOSE 80
-ENTRYPOINT [ "/usr/local/bin/docker-php-entrypoint-dev" ]
+# ENTRYPOINT [ "/usr/local/bin/docker-php-entrypoint-dev" ]
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
