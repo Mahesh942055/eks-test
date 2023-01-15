@@ -13,7 +13,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # install application dependencies
 # copy application code
 WORKDIR /var/www/app
-COPY . /var/www/app
+COPY . .
 #RUN cd /var/www/app && composer install --no-scripts --no-autoloader --ansi --no-interaction
 RUN cd /var/www/app && composer install 
 # RUN cd /var/www/app && composer dump-autoload -o \
