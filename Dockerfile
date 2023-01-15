@@ -3,7 +3,7 @@ FROM fhsinchy/php-nginx-base:php8.1.3-fpm-nginx1.20.2-alpine3.15
 # set composer related environment variables
 ENV PATH="/composer/vendor/bin:$PATH" \
     COMPOSER_ALLOW_SUPERUSER=1 \
-    COMPOSER_VENDOR_DIR=/var/www/vendor \
+    COMPOSER_VENDOR_DIR=/var/www/app/vendor \
     COMPOSER_HOME=/composer
 
 # install composer
@@ -14,6 +14,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # copy application code
 WORKDIR /var/www/app
 COPY . .
+RUN composer install
 #RUN cd /var/www/app && composer install --no-scripts --no-autoloader --ansi --no-interaction
 RUN cd /var/www/app && composer update --no-scripts
 # RUN cd /var/www/app && composer dump-autoload -o \
