@@ -14,7 +14,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 WORKDIR /var/www/app
 COPY ./composer.json ./composer.lock* ./
 #RUN composer install --no-scripts --no-autoloader --ansi --no-interaction
-RUN composer install
+RUN  composer install --ignore-platform-reqs
 
 # add custom php-fpm pool settings, these get written at entrypoint startup
 ENV FPM_PM_MAX_CHILDREN=20 \
